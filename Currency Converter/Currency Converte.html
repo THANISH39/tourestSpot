@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Converter</title>
+  <link rel="stylesheet" href="Currency Converte.css">
+</head>
+<body>
+  <div class="converter">
+    <h3>Currency Converter</h3>
+    <form id="converterForm">
+      <label for="amount">Amount</label>
+      <input type="number" id="amount" placeholder="Enter amount" required>
+
+      <label for="fromCurrency">From</label>
+      <select id="fromCurrency">
+        <option value="USD">USD - US Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="INR">INR - Indian Rupee</option>
+        <option value="GBP">GBP - British Pound</option>
+      </select>
+
+      <label for="toCurrency">To</label>
+      <select id="toCurrency">
+        <option value="USD">USD - US Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="INR">INR - Indian Rupee</option>
+        <option value="GBP">GBP - British Pound</option>
+      </select>
+
+      <button type="submit">Convert</button>
+    </form>
+    <p id="result"></p>
+  </div>
+
+  <script>
+
+    document.getElementById("converterForm").addEventListener("submit", function(event){
+  event.preventDefault();
+
+  let amount = parseFloat(document.getElementById("amount").value);
+  let fromCurrency = document.getElementById("fromCurrency").value;
+  let toCurrency = document.getElementById("toCurrency").value;
+  let result = document.getElementById("result");
+
+  // Example exchange rates (relative to USD)
+  let rates = {
+    "USD": 1,
+    "EUR": 0.92,
+    "INR": 83.1,
+    "GBP": 0.78
+  };
+
+  if(isNaN(amount) || amount <= 0){
+    result.style.color = "red";
+    result.textContent = "Please enter a valid amount!";
+    return;
+  }
+
+  // Convert to USD first, then to target currency
+  let usdAmount = amount / rates[fromCurrency];
+  let convertedAmount = usdAmount * rates[toCurrency];
+
+  result.style.color = "green";
+  result.textContent = `${amount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`;
+});
+
+  </script>
+</body>
+</html>
